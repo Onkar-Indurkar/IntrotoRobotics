@@ -156,27 +156,27 @@ void linefollowing(){
       digitalWrite(RED_LED, HIGH);/*turn on RED LED while disabling motor*/
       break;
     }
-    if(linePos > 0 && linePos < 1200){  /*extreme left turn*/
+    if(linePos > 0 && linePos < 1200){  /* Make an extreme left turn */
       setRawMotorSpeed(LEFT_MOTOR,normalSpeed3);
       setRawMotorSpeed(RIGHT_MOTOR,fastSpeed3);
     } 
-    else if(linePos > 5800 && linePos < 7000) { /*extreme right turn*/
+    else if(linePos > 5800 && linePos < 7000) { /* Make an extreme right turn */
       setRawMotorSpeed(LEFT_MOTOR,fastSpeed3);
       setRawMotorSpeed(RIGHT_MOTOR,normalSpeed3);
     } 
-    else if(linePos > 1200 && linePos < 2200) {  /*2nd last left turn*/
+    else if(linePos > 1200 && linePos < 2200) {  /* Make a left turn */
       setRawMotorSpeed(LEFT_MOTOR,normalSpeed2);
       setRawMotorSpeed(RIGHT_MOTOR,fastSpeed2);
     } 
-    else if(linePos > 4800 && linePos < 5800) {  /*2nd last extreme right turn*/
+    else if(linePos > 4800 && linePos < 5800) {  /* Make a right turn */
       setRawMotorSpeed(LEFT_MOTOR,fastSpeed2);
       setRawMotorSpeed(RIGHT_MOTOR,normalSpeed2);
     }
-    else if(linePos > 3800 && linePos < 4800) {  /*3rd last extreme right turn*/
+    else if(linePos > 3800 && linePos < 4800) {  /* Make a slight right turn */
       setRawMotorSpeed(LEFT_MOTOR,fastSpeed);
       setRawMotorSpeed(RIGHT_MOTOR,normalSpeed);
     }
-    else if(linePos > 2200 && linePos < 3200) { /* 3rd last  left turn*/ 
+    else if(linePos > 2200 && linePos < 3200) { /* Make a slight left turn */ 
       setRawMotorSpeed(LEFT_MOTOR,normalSpeed);
       setRawMotorSpeed(RIGHT_MOTOR,fastSpeed);
     } 
