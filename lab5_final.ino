@@ -1,15 +1,15 @@
 #include "SimpleRSLK.h"
- uint16_t value;
+uint16_t value;
 uint16_t sensorVal[LS_NUM_SENSORS];
 uint16_t sensorCalVal[LS_NUM_SENSORS];
 uint16_t sensorMaxVal[LS_NUM_SENSORS];
 uint16_t sensorMinVal[LS_NUM_SENSORS];
 int cntPerRevolution = 360;
 float Pi = 3.14;
-float wheelDiameter = 7; // in centimeters
+float wheelDiameter = 7; /*in centimeters*/
 bool isCalibrationComplete = false;
- unsigned long timeBegin;
- unsigned long timeEnd;
+unsigned long timeBegin;
+unsigned long timeEnd;
 
 void setup(){
   Serial.begin(9600);
@@ -26,7 +26,7 @@ void loop() {
   waitBtnPressed(LP_RIGHT_BTN);
   if(isCalibrationComplete == false) {
      simpleCalibrate(); 
-    isCalibrationComplete = true;
+     isCalibrationComplete = true;
   }
   waitBtnPressed(LP_RIGHT_BTN);
   blink();
@@ -35,9 +35,9 @@ void loop() {
 
 void blink(){
   for(int i=0;i<3;i++){
-  digitalWrite(GREEN_LED, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(500);               // wait for a second
-  digitalWrite(GREEN_LED, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(GREEN_LED, HIGH);   /* turn the LED on (HIGH is the voltage level)*/
+  delay(500);               /* wait for a second*/
+  digitalWrite(GREEN_LED, LOW);    /* turn the LED off by making the voltage LOW*/
   delay(500); 
   }
 }
@@ -89,24 +89,24 @@ void simpleCalibrate() {
 }
 
 void linefollowing(){
-  enableMotor(BOTH_MOTORS); 
-   float normalSpeed = 23.19; /* ratio = 3.449 */
-  uint16_t fastSpeed = 80;
+ enableMotor(BOTH_MOTORS); 
+ float normalSpeed = 23.19; /* ratio = 3.449 */
+ uint16_t fastSpeed = 80;
   
-  float normalSpeed2 = 35;   /* ratio = 4.5714 */
-  uint16_t fastSpeed2 = 160;
+ float normalSpeed2 = 35;   /* ratio = 4.5714 */
+ uint16_t fastSpeed2 = 160;
   
-  float normalSpeed3 = 10;   /* ratio = 12 */
-  uint16_t fastSpeed3 = 120;
+ float normalSpeed3 = 10;   /* ratio = 12 */
+ uint16_t fastSpeed3 = 120;
 
   
-  float straightSpeed = 40.5;
+ float straightSpeed = 40.5;
   
-  resetRightEncoderCnt();//resetting right encoder
+ resetRightEncoderCnt();//resetting right encoder
   
-  uint8_t lineColor = DARK_LINE;//DARK_LINE  if your floor is lighter than your line
+ uint8_t lineColor = DARK_LINE;/*DARK_LINE  if your floor is lighter than your line*/
  timeBegin = micros();//strt timr
-  while(true){
+ while(true){
   readLineSensor(sensorVal);
   readCalLineSensor(sensorVal,sensorCalVal,sensorMinVal,sensorMaxVal,lineColor);
   
@@ -118,40 +118,40 @@ void linefollowing(){
    value+=sensorVal[i];
   }
   if(value>19000){ //stopping condition
- timeEnd = micros();//stop timr
+    timeEnd = micros();//stop timr
     disableMotor(RIGHT_MOTOR);
     disableMotor(LEFT_MOTOR);
     digitalWrite(RED_LED, HIGH);
     break;
  }
   if(linePos > 0 && linePos < 1200){  /*extreme left turn*/
-  setRawMotorSpeed(LEFT_MOTOR,normalSpeed3);
-  setRawMotorSpeed(RIGHT_MOTOR,fastSpeed3);
-} 
-     else if(linePos > 5800 && linePos < 7000) { /*extreme right turn*/
-  setRawMotorSpeed(LEFT_MOTOR,fastSpeed3);
-  setRawMotorSpeed(RIGHT_MOTOR,normalSpeed3);
+   setRawMotorSpeed(LEFT_MOTOR,normalSpeed3);
+   setRawMotorSpeed(RIGHT_MOTOR,fastSpeed3);
+}
+   else if(linePos > 5800 && linePos < 7000) { /*extreme right turn*/
+    setRawMotorSpeed(LEFT_MOTOR,fastSpeed3);
+    setRawMotorSpeed(RIGHT_MOTOR,normalSpeed3);
   } 
-else if(linePos > 1200 && linePos < 2200) {  /*2nd last left turn*/
-  setRawMotorSpeed(LEFT_MOTOR,normalSpeed2);
-  setRawMotorSpeed(RIGHT_MOTOR,fastSpeed2);
+   else if(linePos > 1200 && linePos < 2200) {  /*2nd last left turn*/
+    setRawMotorSpeed(LEFT_MOTOR,normalSpeed2);
+    setRawMotorSpeed(RIGHT_MOTOR,fastSpeed2);
   } 
-else if(linePos > 4800 && linePos < 5800) {  /*2nd last extreme right turn*/
-  setRawMotorSpeed(LEFT_MOTOR,fastSpeed2);
-  setRawMotorSpeed(RIGHT_MOTOR,normalSpeed2);
+  else if(linePos > 4800 && linePos < 5800) {  /*2nd last extreme right turn*/
+    setRawMotorSpeed(LEFT_MOTOR,fastSpeed2);
+    setRawMotorSpeed(RIGHT_MOTOR,normalSpeed2);
   }
   else if(linePos > 3800 && linePos < 4800) {  /*3rd last extreme right turn*/
-  setRawMotorSpeed(LEFT_MOTOR,fastSpeed);
-  setRawMotorSpeed(RIGHT_MOTOR,normalSpeed);
+    setRawMotorSpeed(LEFT_MOTOR,fastSpeed);
+    setRawMotorSpeed(RIGHT_MOTOR,normalSpeed);
   }
-else if(linePos > 2200 && linePos < 3200) { /* 3rd last  left turn*/
-//5000 > linePos > 3500) 
-  setRawMotorSpeed(LEFT_MOTOR,normalSpeed);
-  setRawMotorSpeed(RIGHT_MOTOR,fastSpeed);
+  else if(linePos > 2200 && linePos < 3200) { /* 3rd last  left turn*/
+    //5000 > linePos > 3500) 
+    setRawMotorSpeed(LEFT_MOTOR,normalSpeed);
+    setRawMotorSpeed(RIGHT_MOTOR,fastSpeed);
 } 
-else { 
-  setRawMotorSpeed(LEFT_MOTOR,straightSpeed);
-  setRawMotorSpeed(RIGHT_MOTOR,straightSpeed);
+  else { 
+    setRawMotorSpeed(LEFT_MOTOR,straightSpeed);
+    setRawMotorSpeed(RIGHT_MOTOR,straightSpeed);
 }
 }
 while(true)printing();
